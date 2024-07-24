@@ -1,0 +1,79 @@
+---
+title: "Apply vs For"
+author: "Miguel Carvalho Nascimento"
+#date: "2024-07-24"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Comparação de Desempenho
+
+Usando o pacote microbenchmark para comparar:
+
+```{r, echo=T }
+#install.packages("microbenchmark")
+library(microbenchmark)
+```
+
+#### Criando objeto para testes de desempenho:
+
+```{r, echo=T}
+(mat <- matrix(1:9, nrow = 3))
+```
+
+#### Exemplo com apply
+
+```{r, echo=T}
+(result_apply <- apply(mat, 1, sum))
+```
+
+#### Exemplo com for
+
+```{r, echo=T}
+result_for <- numeric(nrow(mat))
+for (i in 1:nrow(mat)) {
+  result_for[i] <- sum(mat[i, ])
+};result_for
+```
+
+#### Comparação
+
+```{r, echo=T}
+microbenchmark(
+  apply = apply(mat, 1, sum),
+  for_loop = {
+    result_for <- numeric(nrow(mat))
+    for (i in 1:nrow(mat)) {
+      result_for[i] <- sum(mat[i, ])
+    }
+  }
+)
+```
+
+
+#### Colunas Explicadas
+ - **Unit:** microseconds: A unidade de tempo usada para medir as expressões é microsegundos (1 microsegundo = 10^-6 segundos).
+
+ - **expr:** A expressão sendo avaliada. No caso, temos apply e for_loop.
+
+ - **min:** O menor tempo de execução observado entre todas as execuções. apply tem um mínimo de 18.6 microsegundos, enquanto for_loop tem um mínimo de 1975.2 microsegundos.
+
+ - **lq (lower quartile):** O valor do primeiro quartil, ou seja, 25% das execuções foram concluídas em menos tempo que este valor. apply tem um lq de 23.90 microsegundos, e for_loop tem um lq de 2036.85 microsegundos.
+
+ - **mean:** A média dos tempos de execução. apply tem um tempo médio de 30.746 microsegundos, enquanto for_loop tem uma média de 2277.950 microsegundos.
+
+ - **median:** O valor mediano dos tempos de execução, ou seja, 50% das execuções foram concluídas em menos tempo que este valor. apply tem uma mediana de 31.25 microsegundos e for_loop tem uma mediana de 2082.95 microsegundos.
+
+ - **uq (upper quartile):** O valor do terceiro quartil, ou seja, 75% das execuções foram concluídas em menos tempo que este valor. apply tem um uq de 35.15 microsegundos, e for_loop tem um uq de 2220.15 microsegundos.
+
+ - **max:** O maior tempo de execução observado entre todas as execuções. apply tem um máximo de 93.7 microsegundos, enquanto for_loop tem um máximo de 5675.7 microsegundos.
+
+ - **neval:** O número de execuções realizadas para cada expressão. Ambas as expressões foram executadas 100 vezes.
