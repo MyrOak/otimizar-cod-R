@@ -1,0 +1,35 @@
+---
+title: "Sem o OpenBLAS"
+author: "Miguel Carvalho Nascimento"
+#date: "2024-08-01"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## OpenBLAS
+
+Este script faz sentido se conseguiu instalar o OpenBLAS no seu sistema operacional. Uma
+maneira de instalar ele no linux é por meio deste tutorial: https://installati.one/install-libopenblas-dev-ubuntu-22-04
+
+```{r, echo=T, comment="", message = FALSE, warning = FALSE}
+# Multiplicação de matrizes usando OpenBLAS
+
+A <- matrix(runif(25000000), nrow = 5000)
+B <- matrix(runif(25000000), nrow = 5000)
+
+library(tictoc)
+
+tic()
+  C <- A %*% B
+toc()
+
+```
+

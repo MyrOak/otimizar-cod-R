@@ -1,0 +1,95 @@
+---
+title: "Filtrando dados"
+author: "Miguel Carvalho Nascimento"
+#date: "2024-08-01"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Comparação de Desempenho
+
+Carregando pacotes necessários:
+
+```{r, echo = T, comment="", message = FALSE, warning = FALSE}
+# Carregando pacotes
+library(dplyr)
+library(data.table)
+library(microbenchmark)
+```
+
+#### Criando objeto para testes de desempenho:
+
+```{r, echo=T, comment=""}
+# Dados simulados
+df <- data.frame(a = rnorm(1e6), b = rnorm(1e6))
+dim(df)
+```
+
+#### Exemplo com "r-base"
+
+```{r, echo=T}
+# Método clássico com base R
+system.time({
+  res_base <- df[df$a > 0 & df$b > 0, ]
+})
+
+```
+
+#### Exemplo com "dplyr"
+
+```{r, echo=T, comment=""}
+# Método otimizado com dplyr
+system.time({
+  res_dplyr <- df %>%
+    filter(a > 0, b > 0)
+})
+```
+
+#### Exemplo com "data.table"
+
+```{r, echo=T, comment=""}
+# Método otimizado com data.table
+dt <- as.data.table(df)
+system.time({
+  res_dt <- dt[a > 0 & b > 0]
+})
+```
+
+#### Comparação
+
+```{r, echo=T, comment=""}
+microbenchmark(
+  base = df[df$a > 0 & df$b > 0, ],
+  dplyr = df %>% filter(a > 0, b > 0),
+  data_table = dt[a > 0 & b > 0]
+)
+```
+
+
+#### Colunas Explicadas
+
+ - **Unit:** microseconds: A unidade de tempo usada para medir as expressões é microsegundos (1 microsegundo = 10^-6 segundos).
+
+ - **expr:** A expressão sendo avaliada.
+
+ - **min:** O menor tempo de execução observado entre todas as execuções. 
+
+ - **lq (lower quartile):** O valor do primeiro quartil, ou seja, 25% das execuções foram concluídas em menos tempo que este valor.
+
+ - **mean:** A média dos tempos de execução.
+
+ - **median:** O valor mediano dos tempos de execução, ou seja, 50% das execuções foram concluídas em menos tempo que este valor.
+
+ - **uq (upper quartile):** O valor do terceiro quartil, ou seja, 75% das execuções foram concluídas em menos tempo que este valor.
+
+ - **max:** O maior tempo de execução observado entre todas as execuções.
+
+ - **neval:** O número de execuções realizadas para cada expressão.

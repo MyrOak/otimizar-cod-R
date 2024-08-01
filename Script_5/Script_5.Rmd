@@ -1,0 +1,52 @@
+---
+title: "Proteção contra falhas"
+author: "Miguel Carvalho Nascimento"
+#date: "2024-08-01"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Proteção contra falhas
+
+Inclua verificações e tratamentos de erro para evitar que o código falhe durante execuções longas.
+
+### Forma errada
+
+```{r, echo=T, comment="", eval=FALSE}
+ result <- sqrt(x)
+```
+
+- Problema: Não há tratamento de erros, qualquer entrada inválida pode causar falhas.
+
+#### Criando função para testes de desempenho nos loops:
+
+```{r, echo=T, comment="", eval=FALSE}
+
+safe_function <- function(x) {
+  tryCatch({
+    # Tenta calcular a raiz quadrada de x
+    result <- sqrt(x)
+    return(result)
+  }, warning = function(w) {
+    # Captura avisos, imprime a mensagem e retorna NA
+    message("Warning: ", w)
+    return(NA)
+  }, error = function(e) {
+    # Captura erros, imprime a mensagem e retorna NA
+    message("Error: ", e)
+    return(NA)
+  })
+}
+
+
+```
+
+- Vantagens: Captura e lida com erros e avisos, garantindo que o script continue rodando sem interrupções.

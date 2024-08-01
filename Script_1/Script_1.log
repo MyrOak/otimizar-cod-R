@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.12.7)  24 JUL 2024 11:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.12.7)  24 JUL 2024 19:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -165,6 +165,21 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layouthoffset=\dimen154
 \Gm@layoutvoffset=\dimen155
 \Gm@dimlist=\toks24
+) (c:/Users/migue/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2021/11/24\nobreakspace {} 4.1a\nobreakspace {}verbatim text (tvz,hv)
+\FV@CodeLineNo=\count272
+\FV@InFile=\read2
+\FV@TabBox=\box52
+\c@FancyVerbLine=\count273
+\FV@StepNumber=\count274
+\FV@OutFile=\write3
+) (c:/Users/migue/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip52
+\fb@frw=\dimen156
+\fb@frh=\dimen157
+\FrameRule=\dimen158
+\FrameSep=\dimen159
 ) (c:/Users/migue/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 (c:/Users/migue/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.sty
@@ -176,8 +191,8 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
 )
-\Gin@req@height=\dimen156
-\Gin@req@width=\dimen157
+\Gin@req@height=\dimen160
+\Gin@req@width=\dimen161
 )
 
 ! LaTeX Error: File `bookmark.sty' not found.
@@ -189,15 +204,15 @@ Enter file name:
 ! Emergency stop.
 <read *> 
          
-l.61 \IfFileExists
-                  {xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if a... 
+l.101 \IfFileExists
+                   {xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if ... 
 Here is how much of TeX's memory you used:
- 3263 strings out of 480313
- 45258 string characters out of 5895780
- 336715 words of memory out of 5000000
- 21152 multiletter control sequences out of 15000+600000
+ 3767 strings out of 480313
+ 53427 string characters out of 5895780
+ 346730 words of memory out of 5000000
+ 21648 multiletter control sequences out of 15000+600000
  404193 words of font info for 28 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 55i,0n,62p,222b,38s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,0n,62p,222b,53s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 !  ==> Fatal error occurred, no output PDF file produced!

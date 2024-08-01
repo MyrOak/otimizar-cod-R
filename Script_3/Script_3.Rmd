@@ -1,0 +1,112 @@
+---
+title: "foreach vs for"
+author: "Miguel Carvalho Nascimento"
+#date: "2024-08-01"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Comparação de Desempenho
+
+Usando o pacote microbenchmark para comparar:
+
+```{r, echo=T, comment="", message=FALSE, warning=FALSE}
+# Carregar pacotes necessários
+library(foreach)
+library(doParallel)
+library(microbenchmark)
+```
+
+#### Criando função para testes de desempenho nos loops:
+
+```{r, echo=T, comment=""}
+# Função para ser usada nos loops
+sum_function <- function() {
+  sum(runif(1e6))
+}
+```
+
+#### Função com for
+
+```{r, echo=T, comment=""}
+# Loop usando for
+for_loop <- function() {
+  result <- numeric(100)
+  for (i in 1:100) {
+    result[i] <- sum_function()
+  }
+  return(result)
+}
+```
+
+#### Loop com "foreach"
+
+##### Configurando a paralelização
+
+```{r, echo=T, comment=""}
+# Configurar paralelizacao
+num_cores <- detectCores() - 1
+cl <- makeCluster(num_cores)
+registerDoParallel(cl)
+```
+
+#### foreach
+
+```{r, echo=TRUE, comment=""}
+foreach_loop <- function() {
+  result <- foreach(i = 1:100, .combine = c, .export=c("for_loop","sum_function")) %dopar% {
+    sum_function()
+  }
+  return(result)
+}
+```
+
+
+#### Comparação
+
+```{r, echo=T, comment=""}
+# Comparação de desempenho usando microbenchmark
+benchmark_results <- microbenchmark(
+  for_loop = for_loop(),
+  foreach_loop = foreach_loop(),
+  times = 10
+)
+
+benchmark_results
+
+```
+
+### Encerrando a paralelização
+
+```{r, echo=TRUE, comment=""}
+stopCluster(cl)
+```
+
+
+
+#### Colunas Explicadas
+ - **Unit:** microseconds: A unidade de tempo usada para medir as expressões é microsegundos (1 microsegundo = 10^-6 segundos).
+
+ - **expr:** A expressão sendo avaliada.
+
+ - **min:** O menor tempo de execução observado entre todas as execuções.
+
+ - **lq (lower quartile):** O valor do primeiro quartil, ou seja, 25% das execuções foram concluídas em menos tempo que este valor.
+
+ - **mean:** A média dos tempos de execução.
+
+ - **median:** O valor mediano dos tempos de execução, ou seja, 50% das execuções foram concluídas em menos tempo que este valor.
+
+ - **uq (upper quartile):** O valor do terceiro quartil, ou seja, 75% das execuções foram concluídas em menos tempo que este valor.
+
+ - **max:** O maior tempo de execução observado entre todas as execuções.
+
+ - **neval:** O número de execuções realizadas para cada expressão.
